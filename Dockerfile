@@ -20,6 +20,9 @@ RUN mamba env create -f environment.yml -n venv && \
 
 FROM debian:buster
 
+RUN apt-get update && \
+    apt-get install -y espeak-ng
+
 ENV PYTHONIOENCODING=utf-8
 WORKDIR /app
 VOLUME /app/models
