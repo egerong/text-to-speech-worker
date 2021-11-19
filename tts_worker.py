@@ -92,6 +92,8 @@ class TTSWorker(Worker):
             sent = re.sub(r' +', r' ', sent)
             sent = re.sub(r'^ | $', r'', sent)
             sent = re.sub(r'^, ?', r'', sent)
+            sent = re.sub(r'([^.,!?])$', r'\g<1>.', sent)
+            
             sent = sent.lower()
             sent = re.sub(re.compile(r'\s+'), ' ', sent)
             return sent
