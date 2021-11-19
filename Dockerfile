@@ -33,9 +33,9 @@ USER app
 
 COPY --from=build --chown=app:app /venv /venv
 ENV PATH="/venv/bin:${PATH}"
-COPY --chown=app:app . .
-
 RUN python -c "import nltk; nltk.download(\"punkt\")";
+
+COPY --chown=app:app . .
 
 RUN echo "python tts_worker.py --worker \$WORKER_NAME" > entrypoint.sh
 
