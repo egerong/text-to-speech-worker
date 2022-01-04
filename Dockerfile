@@ -18,7 +18,7 @@ RUN mamba env create -f environment.yml -n venv && \
     find /opt/conda/ -follow -type f -name '*.js.map' -delete && \
     conda env remove -n venv
 
-FROM debian:buster
+FROM nvidia/cuda:11.4.1-base-ubuntu18.04
 
 RUN apt-get update && \
     apt-get install -y espeak-ng
