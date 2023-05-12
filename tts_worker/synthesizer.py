@@ -2,20 +2,22 @@ import io
 import logging
 import re
 
-import numpy as np
-from scipy.io import wavfile
-from nltk import sent_tokenize
+# import numpy as np
+# from scipy.io import wavfile
+# from nltk import sent_tokenize
 
-import tensorflow as tf
-from tensorflow.python.framework.errors_impl import InvalidArgumentError
+# import tensorflow as tf
+# from tensorflow.python.framework.errors_impl import InvalidArgumentError
 
-from tts_worker.config import ModelConfig
-from tts_worker.schemas import Request, Response, ResponseContent
-from tts_worker.utils import clean, split_sentence
+# from tts_worker.config import ModelConfig
+# from tts_worker.schemas import Request, Response, ResponseContent
+# from tts_worker.utils import clean, split_sentence
 
-from tts_worker.vocoding.predictors import HiFiGANPredictor
+# from tts_worker.vocoding.predictors import HiFiGANPredictor
 
 from TransformerTTS.model.models import ForwardTransformer
+
+from mrln_et_light
 
 logger = logging.getLogger(__name__)
 
