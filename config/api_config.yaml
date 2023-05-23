@@ -1,0 +1,24 @@
+speakers:
+  merlin_indrek:
+    languages: [est]
+  merlin_kylli:
+    languages: [est]
+  merlin_lee:
+    languages: [est]
+  merlin_liisi:
+    languages: [est]
+  merlin_liivika:
+    languages: [est]
+  merlin_peeter:
+    languages: [est]
+  merlin_riina:
+    languages: [est]
+  merlin_tambet_otsekone:
+    languages: [est]
+  merlin_tambet_yksiklaused:
+    languages: [est]
+  merlin_tonu:
+    languages: [est]
+alt_names:
+  merlin_külli: merlin_kylli
+  merlin_tõnu: merlin_tonu

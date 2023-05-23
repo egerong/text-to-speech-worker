@@ -17,17 +17,12 @@ structure:
 
 ```
 models
-├── hifigan
-│   ├── ljspeech
-│   │   ├── config.json
-│   │   └── model.pt
-│   ├── vctk
-│   │   ├── config.json
-│   │   └── model.pt
-└── tts
-    └── multispeaker
-        ├── config.yaml
-        └── model_weights.hdf5
+└── merlin
+    └── [VOICE]
+        ├── acoustic_model
+        └── duration_model
+    
+
 ```
 
 ## Setup
@@ -49,11 +44,6 @@ The following environment variables should be configured when running the contai
 - `MQ_EXCHANGE` (optional) - RabbitMQ exchange name (`text-to-speech` by default)
 - `MQ_HEARTBEAT` (optional) - heartbeat interval (`60` seconds by default)
 - `MQ_CONNECTION_NAME` (optional) - friendly connection name (`TTS worker` by default)
-- `MKL_NUM_THREADS` (optional) - number of threads used for intra-op parallelism by PyTorch (used for the vocoder model)
-  . `16` by default. If set to a blank value, it defaults to the number of CPU cores which may cause computational
-  overhead when deployed on larger nodes. Alternatively, the `docker run` flag `--cpuset-cpus` can be used to control
-  this. For more details, refer to the [performance and hardware requirements](#performance-and-hardware-requirements)
-  section below.
 
 By default, the container entrypoint is `main.py` without additional arguments, but arguments should be defined with the
 `COMMAND` option. The only required flag is `--model-name` to select which model is loaded by the worker. The full list
@@ -85,7 +75,7 @@ services:
       - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER}
       - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASS}
   tts_api:
-    image: ghcr.io/tartunlp/text-to-speech-api:latest
+    image: ghcr.io/tartunlp/text-to-speech-api:3.0.0
     environment:
       - MQ_HOST=rabbitmq
       - MQ_PORT=5672
@@ -96,15 +86,17 @@ services:
     depends_on:
       - rabbitmq
   tts_worker:
-    image: ghcr.io/tartunlp/text-to-speech-worker:latest
+    image: ghcr.io/egerong/text-to-speech-worker:merlin-3.0.0
     environment:
       - MQ_HOST=rabbitmq
       - MQ_PORT=5672
       - MQ_USERNAME=${RABBITMQ_USER}
       - MQ_PASSWORD=${RABBITMQ_PASS}
-    command: [ "--model-name", "multispeaker" ]
+    command: [ "--model-name", "merlin" ]
+    tmpfs:
+      - /tmp
     volumes:
-      - ./models:/app/models
+      - ./models/merlin:/app/mrln_et_light/voices/
     depends_on:
       - rabbitmq
 ```
