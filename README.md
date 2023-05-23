@@ -3,12 +3,13 @@
 This repository contains Estonian multi-speaker neural text-to-speech synthesis workers that process requests from
 RabbitMQ.
 
-The project is developed by the [NLP research group](https://tartunlp.ai) at the [University of Tartu](https://ut.ee).
-Speech synthesis can also be tested in our [demo](https://www.neurokone.ee/).
+The project is developed by the [Institute of Estonian Language](https://www.eki.ee) and is based on the work of the [NLP research group](https://tartunlp.ai) at the [University of Tartu](https://ut.ee).
+
+Speech synthesis can also be tested in our [demo](https://www.eki.ee/heli).
 
 ## Models
 
-[The releases section](https://github.com/TartuNLP/text-to-speech-worker/releases) contains the model files or their
+[The releases section](https://github.com/egerong/text-to-speech-worker/releases) contains the model files or their
 download instructions. If a release does not specify the model information, the model from the previous release can
 be used. We advise always using the latest available version to ensure best model quality and code compatibility.
 
@@ -21,8 +22,6 @@ models
     └── [VOICE]
         ├── acoustic_model
         └── duration_model
-    
-
 ```
 
 ## Setup
@@ -109,23 +108,13 @@ The following steps have been tested on Ubuntu and is both CPU and GPU compatibl
 - Install prerequisites:
     - GNU Compiler Collection (`sudo apt install build-essential`)
     - For a **CPU** installation we recommend using the included `requirements.txt` file in a clean environment (tested with
-      Python 3.9)
+      Python 3.6)
       ```commandline
       pip install -r requirements.txt
       ```
 
-    - For a **GPU** installation, use the `environment.yml` file instead.
-        - Make sure you have the following prerequisites installed:
-            - CUDA (see https://developer.nvidia.com/cuda-downloads)
-            - Conda (see https://docs.conda.io/projects/conda/en/latest/user-guide/install/linux.html)
 
-        - Then create and activate a Conda environment with all dependencies:
-          ```commandline
-          conda env create -f environment.yml -n tts
-          conda activate tts
-          ```
-
-- Download the models from the [releases section](https://github.com/TartuNLP/text-to-speech-worker/releases) and
+- Download the models from the [releases section](https://github.com/egerong/text-to-speech-worker/releases) and
   place inside the `models/` directory.
 
 - Check the configuration files and change any defaults as needed. Make sure that the `model_path` parameter in
