@@ -43,6 +43,7 @@ The following environment variables should be configured when running the contai
 - `MQ_EXCHANGE` (optional) - RabbitMQ exchange name (`text-to-speech` by default)
 - `MQ_HEARTBEAT` (optional) - heartbeat interval (`60` seconds by default)
 - `MQ_CONNECTION_NAME` (optional) - friendly connection name (`TTS worker` by default)
+- `MERLIN_TEMP_DIR` (optional) - directory for storing temporary files, in-memory filesystem recommended (`mrln_et_light/temp` by default)
 
 By default, the container entrypoint is `main.py` without additional arguments, but arguments should be defined with the
 `COMMAND` option. The only required flag is `--model-name` to select which model is loaded by the worker. The full list
@@ -115,10 +116,7 @@ The following steps have been tested on Ubuntu and is both CPU and GPU compatibl
 
 
 - Download the models from the [releases section](https://github.com/egerong/text-to-speech-worker/releases) and
-  place inside the `models/` directory.
-
-- Check the configuration files and change any defaults as needed. Make sure that the `model_path` parameter in
-  `config/config.yaml` points to the model you just downloaded.
+  place inside the `mrln_et_light/voices` directory.
 
 - Specify RabbitMQ connection parameters with environment variables or in a `config/.env` file as illustrated in the
   `config/sample.env`.
