@@ -50,7 +50,7 @@ jobs:
           flavor: |
             latest=${{ !github.event.release.prerelease }}
           tags: |
-            type=raw
+            type=ref,event=tag
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LOWER }}
 
       - name: Set up Docker Buildx
