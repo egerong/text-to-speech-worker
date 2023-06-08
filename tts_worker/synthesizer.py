@@ -61,7 +61,7 @@ class Synthesizer:
 
         logger.debug(f"sampling rate: {self.sampling_rate}, ")
 
-        logger.info("Transformer-TTS initialized.")
+        logger.info("Merlin synthesizer initialized.")
 
 
     def process_request(self, request: Request) -> Response:
