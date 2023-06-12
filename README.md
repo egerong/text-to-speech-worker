@@ -83,15 +83,18 @@ services:
       - MQ_PASSWORD=${RABBITMQ_PASS}
     ports:
       - '8000:8000'
+    volumes:
+      - ./config/api_config.yaml:/app/config/config.yaml
     depends_on:
       - rabbitmq
   tts_worker:
-    image: ghcr.io/egerong/text-to-speech-worker:merlin-3.0.0
+    image: ghcr.io/egerong/text-to-speech-worker:merlin-3.0.1
     environment:
       - MQ_HOST=rabbitmq
       - MQ_PORT=5672
       - MQ_USERNAME=${RABBITMQ_USER}
       - MQ_PASSWORD=${RABBITMQ_PASS}
+      - MERLIN_TEMP_DIR=/tmp
     command: [ "--model-name", "merlin" ]
     tmpfs:
       - /tmp
