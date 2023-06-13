@@ -1,6 +1,6 @@
 import yaml
 from yaml.loader import SafeLoader
-from typing import Dict
+from typing import Dict, Optional
 
 from pydantic import BaseSettings, BaseModel
 
@@ -40,7 +40,7 @@ class ModelConfig(BaseModel):
     model_name: str
     model_path: str
     frontend: str
-    speakers: Dict[str, Speaker]
+    speakers: Optional[Dict[str, Speaker]]
     vocoders: Dict[str, str]  # name; vocoder path pairs
 
 
@@ -49,7 +49,7 @@ def read_model_config(file_path: str, model_name: str) -> ModelConfig:
         config = yaml.load(f, Loader=SafeLoader)
         model_config = ModelConfig(
             model_name=model_name,
-            vocoders=config['vocoders'],
+            vocoders=config.get('vocoders', {}),
             **config['tts_models'][model_name]
         )
 

@@ -1,0 +1,27 @@
+speakers:
+  vits_albert:
+    languages: [est]
+  vits_indrek:
+    languages: [est]
+  vits_kalev:
+    languages: [est]
+  vits_kersti:
+    languages: [est]
+  vits_kylli:
+    languages: [est]
+  vits_lee:
+    languages: [est]
+  vits_liivika:
+    languages: [est]
+  vits_mari:
+    languages: [est]
+  vits_meelis:
+    languages: [est]
+  vits_peeter:
+    languages: [est]
+  vits_tambet:
+    languages: [est]
+  vits_vesta:
+    languages: [est]
+alt_names:
+  vits_külli: vits_kylli

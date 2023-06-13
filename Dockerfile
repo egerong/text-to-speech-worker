@@ -24,6 +24,10 @@ COPY --chown=app:app requirements.txt .
 RUN pip install --user -r requirements.txt && \
     rm requirements.txt
 
+COPY --chown=app:app TTS TTS
+
+RUN pip install -e TTS
+
 COPY --chown=app:app . .
 
 ENTRYPOINT ["python", "main.py"]
