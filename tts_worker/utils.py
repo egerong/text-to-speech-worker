@@ -15,11 +15,11 @@ PRE_REGEXES = (
 POST_REGEXES = (
     (re.compile(r'[()[\]:;−­–…—]'), ', '),
     (re.compile(r'[«»“„”]'), '"'),
-    (re.compile(r'[*\'\\/-]'), ' '),
+    (re.compile(r'[*\'\\/]'), ' '),
     (re.compile(r'[`´’\']'), ''),
     (re.compile(r' +([.,!?])'), r'\g<1>'),
     (re.compile(r', ?([.,?!])'), r'\g<1>'),
-    (re.compile(r'\.+'), ''),
+    # (re.compile(r'\.+'), ''),
 
     (re.compile(r' +'), ' '),
     (re.compile(r'^ | $'), ''),

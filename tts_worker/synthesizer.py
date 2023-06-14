@@ -35,6 +35,7 @@ class Synthesizer:
         model_speakers = self.model.tts_model.speaker_manager.speaker_names
         self.speakers = [SPEAKER_PREFIX + speaker for speaker in model_speakers]
         
+        self.sampling_rate = self.model.tts_config.audio.sample_rate
 
 
     def process_request(self, request: Request) -> Response:
@@ -61,7 +62,7 @@ class Synthesizer:
                 audio=out.read(),
                 text=text,
                 normalized_text=normalized_text,
-                # sampling_rate=self.model.config['sampling_rate'],
+                sampling_rate=self.sampling_rate,
             )
         )
 
