@@ -11,13 +11,13 @@ Speech synthesis can also be tested in our [demo](https://www.eki.ee/heli).
 
 This repository follows a branch-based structure to provide different implementations of speech synthesizers. The main branch contains code shared by the models and serves as a starting point. The specific implementations for different speech synthesizers can be found in separate branches which contain the necessary code to integrate the respective synthesizers with the TTS workers.
 
-[The releases section](https://github.com/egerong/text-to-speech-worker/releases) contains the model files or their
+[The releases section](https://github.com/keeleinstituut/text-to-speech-worker/releases) contains the model files or their
 download instructions. If a release does not specify the model information, the model from the previous release can
 be used. We advise always using the latest available version to ensure best model quality and code compatibility.
 
 Currently, the following models are available:
-- Merlin-based multi-speaker model (branch: [merlin](https://github.com/egerong/text-to-speech-worker/tree/merlin))
-- VITS-based multi-speaker model (branch: [vits](https://github.com/egerong/text-to-speech-worker/tree/vits))
+- Merlin-based multi-speaker model (branch: [merlin](https://github.com/keeleinstituut/text-to-speech-worker/tree/merlin))
+- VITS-based multi-speaker model (branch: [vits](https://github.com/keeleinstituut/text-to-speech-worker/tree/vits))
 
 ## Setup
 
@@ -84,7 +84,7 @@ The following steps have been tested on Ubuntu and is both CPU and GPU compatibl
           conda activate tts
           ```
 
-- Download the models from the [releases section](https://github.com/TartuNLP/text-to-speech-worker/releases) and
+- Download the models from the [releases section](https://github.com/keeleinstituut/text-to-speech-worker/releases) and
   place inside the `models/` directory.
 
 - Check the configuration files and change any defaults as needed. Make sure that the `model_path` parameter in
