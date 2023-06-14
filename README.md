@@ -3,34 +3,25 @@
 This repository contains Estonian multi-speaker neural text-to-speech synthesis workers that process requests from
 RabbitMQ.
 
-The project is developed by the [NLP research group](https://tartunlp.ai) at the [University of Tartu](https://ut.ee).
-Speech synthesis can also be tested in our [demo](https://www.neurokone.ee/).
+The project is developed by the [Institute of the Estonian Language](https://www.eki.ee) and is based on the work of the [NLP research group](https://tartunlp.ai) at the [University of Tartu](https://ut.ee).
+
+Speech synthesis can also be tested in our [demo](https://www.eki.ee/heli).
 
 ## Models
 
-[The releases section](https://github.com/TartuNLP/text-to-speech-worker/releases) contains the model files or their
+This repository follows a branch-based structure to provide different implementations of speech synthesizers. The main branch contains code shared by the models and serves as a starting point. The specific implementations for different speech synthesizers can be found in separate branches which contain the necessary code to integrate the respective synthesizers with the TTS workers.
+
+[The releases section](https://github.com/egerong/text-to-speech-worker/releases) contains the model files or their
 download instructions. If a release does not specify the model information, the model from the previous release can
 be used. We advise always using the latest available version to ensure best model quality and code compatibility.
 
-The model configuration files included in `config/config.yaml` correspond to the following `models/` directory
-structure:
-
-```
-models
-├── hifigan
-│   ├── ljspeech
-│   │   ├── config.json
-│   │   └── model.pt
-│   ├── vctk
-│   │   ├── config.json
-│   │   └── model.pt
-└── tts
-    └── multispeaker
-        ├── config.yaml
-        └── model_weights.hdf5
-```
+Currently, the following models are available:
+- Merlin-based multi-speaker model (branch: [merlin](https://github.com/egerong/text-to-speech-worker/tree/merlin))
+- VITS-based multi-speaker model (branch: [vits](https://github.com/egerong/text-to-speech-worker/tree/vits))
 
 ## Setup
+
+Example docker-compose files can be found in the readme of each model branch.
 
 The TTS worker can be deployed using the docker image published alongside the repository. Each image version correlates
 to a specific release. The required model file(s) are excluded from the image to reduce the image size and should be
@@ -40,7 +31,7 @@ Logging configuration is loaded from `/app/config/logging.prod.ini` and service 
 `/app/config/config.yaml` file. The included config is commented to illustrate how new model configurations could be
 added.
 
-The following environment variables should be configured when running the container:
+The following environment variables should be configured when running the container for all models:
 
 - `MQ_USERNAME` - RabbitMQ username
 - `MQ_PASSWORD` - RabbitMQ user password
@@ -49,11 +40,6 @@ The following environment variables should be configured when running the contai
 - `MQ_EXCHANGE` (optional) - RabbitMQ exchange name (`text-to-speech` by default)
 - `MQ_HEARTBEAT` (optional) - heartbeat interval (`60` seconds by default)
 - `MQ_CONNECTION_NAME` (optional) - friendly connection name (`TTS worker` by default)
-- `MKL_NUM_THREADS` (optional) - number of threads used for intra-op parallelism by PyTorch (used for the vocoder model)
-  . `16` by default. If set to a blank value, it defaults to the number of CPU cores which may cause computational
-  overhead when deployed on larger nodes. Alternatively, the `docker run` flag `--cpuset-cpus` can be used to control
-  this. For more details, refer to the [performance and hardware requirements](#performance-and-hardware-requirements)
-  section below.
 
 By default, the container entrypoint is `main.py` without additional arguments, but arguments should be defined with the
 `COMMAND` option. The only required flag is `--model-name` to select which model is loaded by the worker. The full list
@@ -72,41 +58,6 @@ optional arguments:
                         The model to load. Refers to the model name in the config file.
   --log-config LOG_CONFIG
                         Path to log config file.
-```
-
-The setup can be tested with the following sample `docker-compose.yml` configuration:
-
-```yaml
-version: '3'
-services:
-  rabbitmq:
-    image: 'rabbitmq'
-    environment:
-      - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER}
-      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASS}
-  tts_api:
-    image: ghcr.io/tartunlp/text-to-speech-api:latest
-    environment:
-      - MQ_HOST=rabbitmq
-      - MQ_PORT=5672
-      - MQ_USERNAME=${RABBITMQ_USER}
-      - MQ_PASSWORD=${RABBITMQ_PASS}
-    ports:
-      - '8000:8000'
-    depends_on:
-      - rabbitmq
-  tts_worker:
-    image: ghcr.io/tartunlp/text-to-speech-worker:latest
-    environment:
-      - MQ_HOST=rabbitmq
-      - MQ_PORT=5672
-      - MQ_USERNAME=${RABBITMQ_USER}
-      - MQ_PASSWORD=${RABBITMQ_PASS}
-    command: [ "--model-name", "multispeaker" ]
-    volumes:
-      - ./models:/app/models
-    depends_on:
-      - rabbitmq
 ```
 
 ### Manual setup
