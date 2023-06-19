@@ -1,0 +1,33 @@
+version: '3'
+services:
+  rabbitmq:
+    image: 'rabbitmq'
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASS}
+  tts_api:
+    image: ghcr.io/tartunlp/text-to-speech-api:latest
+    environment:
+      - MQ_HOST=rabbitmq
+      - MQ_PORT=5672
+      - MQ_USERNAME=${RABBITMQ_USER}
+      - MQ_PASSWORD=${RABBITMQ_PASS}
+    volumes:
+      - ./config/api_config.yaml:/app/config/config.yaml
+    ports:
+      - '8000:8000'
+    depends_on:
+      - rabbitmq
+  tts_worker:
+    image: ghcr.io/keeleinstituut/text-to-speech-worker:vits-3.0.1
+    runtime: nvidia
+    environment:
+      - MQ_HOST=rabbitmq
+      - MQ_PORT=5672
+      - MQ_USERNAME=${RABBITMQ_USER}
+      - MQ_PASSWORD=${RABBITMQ_PASS}
+    command: [ "--model-name", "vits" ]
+    volumes:
+      - ./models:/app/models
+    depends_on:
+      - rabbitmq

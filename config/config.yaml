@@ -1,4 +1,4 @@
 tts_models:
   vits:
-    model_path: models/vits/v1 # the directory that contains a yaml and hdf5 files for the model
+    model_path: models/vits # the directory that contains a yaml and hdf5 files for the model
     frontend: 'est'
